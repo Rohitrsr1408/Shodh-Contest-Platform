@@ -5,10 +5,13 @@ A full-stack competitive programming contest platform built with Spring Boot and
 ## Features
 
 - **User Registration**: Join contests with username and contest ID
-- **Problem Viewing**: Browse programming problems with descriptions and test cases
-- **Code Submission**: Submit solutions through an in-browser code editor
+- **Problem Viewing**: Browse programming problems with descriptions, test cases, and difficulty badges
+- **Multi-Language Support**: Write solutions in Java or C++ with language-specific code templates
+- **Code Submission**: Submit solutions through an in-browser code editor with language selection
 - **Real-time Judging**: Simulated code execution with status updates (Pending → Running → Accepted/Wrong Answer)
-- **Live Leaderboard**: Auto-refreshing leaderboard showing rankings and scores
+- **Live Leaderboard**: Auto-refreshing leaderboard with medal emojis for top performers
+- **Per-User Submission Tracking**: View your submission history with sequential numbering (#1, #2, #3...)
+- **Enhanced UI**: Modern gradient design with status icons, difficulty badges, and responsive layouts
 - **Multiple Problems**: Pre-seeded contest with 3 programming challenges
 
 ## Technology Stack
@@ -148,6 +151,7 @@ Content-Type: application/json
 {
   "userId": 1,
   "problemId": 1,
+  "language": "JAVA",
   "code": "import java.util.*;\npublic class Main {\n  public static void main(String[] args) {\n    Scanner sc = new Scanner(System.in);\n    int a = sc.nextInt(), b = sc.nextInt();\n    System.out.println(a+b);\n  }\n}"
 }
 ```
@@ -158,6 +162,7 @@ Content-Type: application/json
   "id": 1,
   "userId": 1,
   "problemId": 1,
+  "language": "JAVA",
   "code": "...",
   "status": "PENDING",
   "submittedAt": "2025-10-26T08:00:00",
@@ -212,9 +217,10 @@ The backend follows a layered architecture:
 
 **Key Components:**
 
-- **JudgeService**: Simulates code execution with realistic delays and intelligent code analysis
+- **JudgeService**: Simulates code execution for Java and C++ with realistic delays and intelligent code analysis
 - **LeaderboardService**: Calculates rankings based on accepted submissions
 - **ContestService**: Manages contest and user operations
+- **Language Support**: JAVA and CPP enum values for multi-language submissions
 
 ### Frontend State Flow
 
@@ -229,10 +235,12 @@ The backend follows a layered architecture:
 
 Since Docker is not available in Replit, the platform uses an intelligent simulated judging engine that:
 
-- Analyzes code for relevant operations (e.g., addition, multiplication)
-- Matches problem requirements with code patterns
+- Supports both Java and C++ code analysis
+- Analyzes code for relevant operations (e.g., addition, multiplication, factorial patterns)
+- Matches problem requirements with code patterns using language-specific heuristics
 - Provides realistic status transitions: PENDING → RUNNING → ACCEPTED/WRONG_ANSWER
 - Includes deliberate delays to simulate real code execution
+- Awards points only for accepted solutions
 
 ## Pre-seeded Data
 
@@ -255,11 +263,13 @@ The application comes with a sample contest containing 3 problems:
 1. Open the application in your browser
 2. Enter a username and contest ID (use "1" for the sample contest)
 3. Click "Join Contest"
-4. Select a problem from the tabs
-5. Write your solution in the code editor
-6. Click "Submit Solution"
-7. Watch the submission status update in real-time
-8. Check the leaderboard to see your ranking
+4. Select a problem from the tabs to view its description and difficulty
+5. Choose your preferred language (Java or C++) from the dropdown
+6. Write your solution in the code editor (templates provided for each language)
+7. Click "Submit Solution"
+8. Watch your submission status update in real-time with visual status icons
+9. View your per-user submission history with sequential numbering
+10. Check the live leaderboard to see your ranking with medal emojis for top 3
 
 ## Development Notes
 
@@ -272,10 +282,12 @@ The application comes with a sample contest containing 3 problems:
 
 - Integrate actual code execution using external judge APIs (Judge0, Sphere Engine)
 - Add user authentication and persistent accounts
-- Support multiple programming languages (Python, C++, JavaScript)
+- Support additional programming languages (Python, JavaScript, Go, Rust)
 - Implement contest scheduling with start/end times
 - Add detailed submission history and code review features
 - Support for custom test cases
+- Add time and memory limit tracking
+- Implement partial scoring for partially correct solutions
 
 ## License
 
