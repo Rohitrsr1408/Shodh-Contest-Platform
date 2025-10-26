@@ -1,0 +1,242 @@
+🚀 REPLIT PROMPT — Fully Functional Shodh-a-Code Platform Prototype (Spring Boot + Next.js + Docker)
+
+Paste this entire block in Replit’s prompt box:
+
+Prompt for Replit:
+
+I want you to create a fully functional prototype of the “Shodh-a-Code” Contest Platform within Replit free limits.
+Please build this project with the following requirements:
+
+🧩 OVERVIEW
+
+Build a basic but working end-to-end system that lets users:
+
+Join a contest with a username and contest ID.
+
+View problems for that contest.
+
+Submit code for a problem.
+
+Run submissions securely in Docker (limited to small Java programs).
+
+See results live (“Pending”, “Running”, “Accepted”, “Wrong Answer”).
+
+View a live leaderboard (auto-refresh every few seconds).
+
+No fancy design — just a functional UI and working backend.
+
+⚙️ TECH STACK
+
+Backend (Folder: /backend)
+
+Spring Boot (Java 17)
+
+RESTful API
+
+In-memory DB using H2 (to stay Replit-compatible)
+
+Docker integration using ProcessBuilder (to run user code)
+
+Expose the following endpoints:
+
+GET /api/contests/{contestId} — Get contest + problem list
+
+POST /api/submissions — Submit code
+
+GET /api/submissions/{submissionId} — Poll submission status
+
+GET /api/contests/{contestId}/leaderboard — Get current leaderboard
+
+Use a pre-seeded contest with 2–3 problems and sample input/output test cases stored in JSON.
+
+Judging Engine
+
+On submission:
+
+Save code to a temp file (Main.java)
+
+Run a Docker command to execute code (limit CPU/time)
+
+Compare stdout with expected output
+
+Update submission status (Accepted / Wrong Answer / Error)
+
+Use minimal Docker image: openjdk:17-alpine
+
+Frontend (Folder: /frontend)
+
+Next.js + Tailwind CSS
+
+Pages:
+
+/join — Enter Contest ID + Username
+
+/contest/[id] — Show problem list, code editor (simple textarea), submit button
+
+Leaderboard (poll backend every 15–30s)
+
+Submission status panel (poll every 2–3s)
+
+State Management: React hooks only (no Redux, keep it simple)
+
+Use fetch for all API calls.
+
+Containerization
+
+A top-level docker-compose.yml that:
+
+Starts both backend and frontend
+
+Mounts Docker socket so backend can spawn judge containers
+
+📦 PROJECT STRUCTURE
+shodh-a-code/
+├── backend/
+│   ├── src/
+│   ├── pom.xml
+│   ├── Dockerfile
+│   └── README.md
+├── frontend/
+│   ├── pages/
+│   ├── package.json
+│   ├── Dockerfile
+│   └── README.md
+├── docker-compose.yml
+└── README.md
+
+🧠 BACKEND HINTS
+
+Entities (simplified):
+
+User { id, username }
+
+Contest { id, name, problems }
+
+Problem { id, title, description, input, expectedOutput }
+
+Submission { id, userId, problemId, code, status, result }
+
+Use H2 + data.sql to prepopulate sample data.
+
+🔥 FRONTEND HINTS
+
+Keep UI minimal:
+
+<textarea> for code input
+
+<button> to submit
+
+<div> for showing problem and leaderboard
+
+Use setInterval for polling endpoints.
+
+🐳 DOCKER DETAILS
+
+backend/Dockerfile
+
+FROM openjdk:17-jdk-slim
+WORKDIR /app
+COPY target/backend.jar backend.jar
+ENTRYPOINT ["java", "-jar", "backend.jar"]
+
+
+frontend/Dockerfile
+
+FROM node:18-alpine
+WORKDIR /app
+COPY . .
+RUN npm install
+RUN npm run build
+CMD ["npm", "start"]
+
+
+docker-compose.yml
+
+version: "3.8"
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+🧾 README.md REQUIREMENTS
+
+At the top-level, include a README.md with:
+
+Setup instructions (e.g., docker-compose up --build)
+
+API documentation (example JSON request/response)
+
+Short explanation of:
+
+Backend architecture
+
+Frontend state flow
+
+Docker orchestration choices
+
+🧪 TESTING
+
+Preload one contest in data.sql:
+
+Contest: “Sample Contest”
+
+Problems:
+
+“Add Two Numbers”
+
+Input: 2 3
+
+Expected: 5
+
+“Square a Number”
+
+Input: 4
+
+Expected: 16
+
+A user submits Java code like:
+
+import java.util.*;
+public class Main {
+  public static void main(String[] args) {
+    Scanner sc = new Scanner(System.in);
+    int a = sc.nextInt(), b = sc.nextInt();
+    System.out.println(a+b);
+  }
+}
+
+
+The backend runs it in Docker, compares output, and updates the result.
+
+🕒 GOAL
+
+By the end:
+✅ You can open frontend → join contest → solve → submit → see results → see leaderboard.
+✅ All data lives in-memory (H2).
+✅ Code runs inside Docker, safely and automatically.
+✅ The app runs completely within Replit (no external DBs).
+
+⚡ Final note for Replit
+
+Please generate:
+
+A working Spring Boot backend (/backend)
+
+A working Next.js frontend (/frontend)
+
+Docker setup (docker-compose.yml)
+
+Sample seeded data
+
+Clean README.md with setup steps.
+
+Keep all code lightweight and minimal, but fully working end-to-end.
