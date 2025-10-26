@@ -18,11 +18,12 @@ public class SubmissionService {
     private final ProblemRepository problemRepository;
     private final JudgeService judgeService;
 
-    public Submission submitCode(Long userId, Long problemId, String code) {
+    public Submission submitCode(Long userId, Long problemId, String code, String language) {
         Submission submission = new Submission();
         submission.setUserId(userId);
         submission.setProblemId(problemId);
         submission.setCode(code);
+        submission.setLanguage(language != null ? language : "JAVA");
         submission.setStatus("PENDING");
         submission.setSubmittedAt(LocalDateTime.now());
         submission.setScore(0);

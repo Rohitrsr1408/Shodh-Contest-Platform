@@ -19,7 +19,8 @@ public class SubmissionController {
         Submission submission = submissionService.submitCode(
             request.getUserId(),
             request.getProblemId(),
-            request.getCode()
+            request.getCode(),
+            request.getLanguage()
         );
         return ResponseEntity.ok(submission);
     }

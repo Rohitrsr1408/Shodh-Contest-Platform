@@ -36,4 +36,7 @@ public class Submission {
     private LocalDateTime submittedAt;
 
     private Integer score;
+
+    @Column(nullable = false)
+    private String language;
 }

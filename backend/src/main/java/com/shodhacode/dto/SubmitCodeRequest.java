@@ -7,4 +7,5 @@ public class SubmitCodeRequest {
     private Long userId;
     private Long problemId;
     private String code;
+    private String language;
 }
