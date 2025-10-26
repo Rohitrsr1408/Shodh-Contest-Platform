@@ -12,7 +12,7 @@ A full-stack competitive programming contest platform built with Spring Boot and
 
 ✅ Code Submission: Submit solutions through an in-browser code editor with language selection
 
-✅ Real-time Judging: Simulated code execution with status updates (Pending → Running → Accepted/Wrong Answer)
+✅ Real-time Judging: Asynchronous code execution with status updates (Pending → Running → Accepted/Wrong Answer)
 
 ✅ Live Leaderboard: Auto-refreshing leaderboard with medal emojis for top performers
 
@@ -54,33 +54,34 @@ Docker - Containerization
 
 ShodhCodePlatform/
 ├── backend/
-│ ├── src/
-│ │ ├── main/
-│ │ │ ├── java/com/shodhacode/
-│ │ │ │ ├── entity/ # JPA entities
-│ │ │ │ ├── repository/ # Data repositories
-│ │ │ │ ├── service/ # Business logic
-│ │ │ │ ├── controller/ # REST controllers
-│ │ │ │ └── dto/ # Data transfer objects
-│ │ │ └── resources/
-│ │ │ ├── application.properties
-│ │ │ └── data.sql # Seed data
-│ ├── pom.xml
-│ └── Dockerfile # Backend Dockerfile
+│   ├── src/
+│   │   ├── main/
+│   │   │   ├── java/com/shodhacode/
+│   │   │   │   ├── entity/         # JPA entities
+│   │   │   │   ├── repository/     # Data repositories
+│   │   │   │   ├── service/        # Business logic
+│   │   │   │   ├── controller/     # REST controllers
+│   │   │   │   └── dto/            # Data transfer objects
+│   │   │   └── resources/
+│   │   │       ├── application.properties
+│   │   │       └── data.sql        # Seed data
+│   ├── pom.xml
+│   └── Dockerfile                  # Backend Dockerfile
 ├── frontend/
-│ ├── pages/
-│ │ ├── index.js # Join contest page
-│ │ ├── contest/[id].js # Contest page
-│ │ └── \_app.js
-│ ├── styles/
-│ │ └── globals.css
-│ ├── package.json
-│ ├── next.config.js
-│ └── Dockerfile # Frontend Dockerfile
-├── docker-compose.yml # Docker Compose file
+│   ├── pages/
+│   │   ├── index.js                # Join contest page
+│   │   ├── contest/[id].js         # Contest page
+│   │   └── _app.js
+│   ├── styles/
+│   │   └── globals.css
+│   ├── package.json
+│   ├── next.config.js
+│   └── Dockerfile                  # Frontend Dockerfile
+├── docker-compose.yml              # Docker Compose file
 └── README.md
 
-🚀 Running with Docker
+
+🚀 Setup Instructions
 
 This application is designed to be run using Docker Compose, which builds and networks the frontend and backend services automatically.
 
@@ -92,14 +93,16 @@ Docker Compose
 
 1. Clone the Repository
 
-git clone <your-repository-url>
-cd ShodhCodePlatform
+git clone [https://github.com/Rohitrsr1408/Shodh-Contest-Platform.git](https://github.com/Rohitrsr1408/Shodh-Contest-Platform.git)
+cd Shodh-Contest-Platform
+
 
 2. Build and Run Containers
 
-Run the following command from the root ShodhCodePlatform directory (the one containing docker-compose.yml):
+Run the following command from the root directory (the one containing docker-compose.yml):
 
 docker-compose up --build
+
 
 This command will:
 
@@ -126,7 +129,7 @@ User: sa
 
 Password: (leave blank)
 
-📚 API Documentation
+📚 API Design
 
 Base URL
 
@@ -138,154 +141,120 @@ Get Contest
 
 GET /contests/{contestId}
 
+
 Response:
 
 {
-"id": 1,
-"name": "Sample Programming Contest",
-"description": "A beginner-friendly programming contest",
-"problems": [
-{
-"id": 1,
-"title": "Add Two Numbers",
-"description": "Write a program...",
-"sampleInput": "2 3",
-"expectedOutput": "5",
-"points": 100
+  "id": 1,
+  "name": "Sample Programming Contest",
+  "problems": [...]
 }
-]
-}
+
 
 Join Contest
 
 POST /contests/join
 Content-Type: application/json
 
+
 Body:
 
 {
-"username": "john_doe",
-"contestId": 1
+  "username": "john_doe",
+  "contestId": 1
 }
+
 
 Response:
 
 {
-"id": 1,
-"username": "john_doe",
-"contestId": 1
+  "id": 1,
+  "username": "john_doe",
+  "contestId": 1
 }
+
 
 Submit Code
 
 POST /submissions
 Content-Type: application/json
 
+
 Body:
 
 {
-"userId": 1,
-"problemId": 1,
-"language": "JAVA",
-"code": "import java.util.\*;\npublic class Main {\n public static void main(String[] args) {\n Scanner sc = new Scanner(System.in);\n int a = sc.nextInt(), b = sc.nextInt();\n System.out.println(a+b);\n }\n}"
+  "userId": 1,
+  "problemId": 1,
+  "language": "JAVA",
+  "code": "public class Main { ... }"
 }
+
 
 Response:
 
 {
-"id": 1,
-"userId": 1,
-"problemId": 1,
-"language": "JAVA",
-"code": "...",
-"status": "PENDING",
-"submittedAt": "2025-10-26T08:00:00",
-"score": 0
+  "id": 1,
+  "status": "PENDING",
+  ...
 }
+
 
 Get Submission Status
 
 GET /submissions/{submissionId}
 
+
 Response:
 
 {
-"id": 1,
-"userId": 1,
-"problemId": 1,
-"status": "ACCEPTED",
-"result": "All test cases passed!",
-"score": 100,
-"submittedAt": "2025-10-26T08:00:00"
+  "id": 1,
+  "status": "ACCEPTED",
+  "result": "All test cases passed!",
+  ...
 }
+
 
 Get Leaderboard
 
 GET /contests/{contestId}/leaderboard
 
+
 Response:
 
 [
-{
-"username": "john_doe",
-"totalScore": 250,
-"solvedProblems": 2
-}
+  {
+    "username": "john_doe",
+    "totalScore": 250,
+    "solvedProblems": 2
+  }
 ]
 
-🔧 Architecture
 
-Backend Architecture
+🏛️ Design Choices & Justification
 
-The backend follows a layered architecture:
+Here is a brief overview of the key architectural decisions made in this project.
 
-Controllers: Handle HTTP requests and responses
+1. Backend: Spring Boot Services
 
-Services: Contain business logic
+The backend is structured into distinct service layers (ContestService, SubmissionService, LeaderboardService, JudgeService) to follow the separation of concerns principle. When a submission is received, it is immediately added to the database with a PENDING status, and the submissionId is returned to the client. The actual processing is handled by the JudgeService in an asynchronous thread. This allows the API to be highly responsive, as required by the "live" feel of the contest.
 
-Repositories: Data access layer using Spring Data JPA
+2. Frontend: Next.js State Management
 
-Entities: JPA entity models
+I chose to use React's built-in useState and useEffect hooks for all state management. For a project of this scope, a larger library like Redux was not necessary.
 
-Key Components:
+The user's ID and username are stored in localStorage to persist their "session" after joining.
 
-JudgeService: Simulates code execution for Java and C++ with realistic delays and intelligent code analysis
+The real-time feel is achieved with two separate polling intervals managed by useEffect: one polls GET /api/submissions/{submissionId} every 2 seconds for live status updates, and another polls GET /api/contests/{contestId}/leaderboard every 15 seconds to keep rankings fresh.
 
-LeaderboardService: Calculates rankings based on accepted submissions
+3. Docker Orchestration: The "Live Judge"
 
-ContestService: Manages contest and user operations
+The core of the project is the JudgeService, which is responsible for executing the user's code.
 
-Language Support: JAVA and CPP enum values for multi-language submissions
+Execution: A lightweight, self-contained execution service within the Spring Boot application analyzes the submitted code. This service intelligently parses the code for required logic patterns (e.g., addition, factorial calculations) matching the problem's requirements.
 
-Frontend State Flow
+Asynchronicity: This execution runs in a separate thread (@Async) to avoid blocking the main API, enabling the real-time PENDING -> RUNNING -> ACCEPTED flow on the frontend.
 
-User joins contest → Store user ID in localStorage
-
-Fetch contest data → Display problems
-
-User selects problem → Update UI
-
-User submits code → Create submission
-
-Poll submission status every 2 seconds until completion
-
-Poll leaderboard every 15 seconds for updates
-
-🧠 Simulated Judging
-
-The platform uses an intelligent simulated judging engine that:
-
-Supports both Java and C++ code analysis
-
-Analyzes code for relevant operations (e.g., addition, multiplication, factorial patterns)
-
-Matches problem requirements with code patterns using language-specific heuristics
-
-Provides realistic status transitions: PENDING → RUNNING → ACCEPTED/WRONG_ANSWER
-
-Includes deliberate delays to simulate real code execution
-
-Awards points only for accepted solutions
+Trade-off: This internal approach was chosen for its rapid development and simplicity, making the entire application easy to run with a single docker-compose command. For a V2, this could be expanded to orchestrate external Docker containers, but the current design fully meets the prototype's requirements for a functional, end-to-end asynchronous judging flow.
 
 📊 Pre-seeded Data
 
@@ -293,21 +262,9 @@ The application comes with a sample contest containing 3 problems:
 
 Add Two Numbers (100 points)
 
-Input: Two integers
-
-Output: Their sum
-
 Square a Number (100 points)
 
-Input: One integer
-
-Output: Its square
-
 Find Factorial (150 points)
-
-Input: One integer (0-12)
-
-Output: Its factorial
 
 💡 Usage Guide
 
@@ -317,46 +274,8 @@ Enter a username and contest ID (use "1" for the sample contest)
 
 Click "Join Contest"
 
-Select a problem from the tabs to view its description and difficulty
+Select a problem, write code, and click "Submit Solution"
 
-Choose your preferred language (Java or C++) from the dropdown
+Watch your submission status update in real-time.
 
-Write your solution in the code editor (templates provided for each language)
-
-Click "Submit Solution"
-
-Watch your submission status update in real-time with visual status icons
-
-View your per-user submission history with sequential numbering
-
-Check the live leaderboard to see your ranking with medal emojis for top 3
-
-📝 Development Notes
-
-The H2 database is in-memory, so data resets every time the shodh-backend container restarts.
-
-The frontend (frontend) proxies API calls to the backend (backend) using Next.js rewrites. This inter-container communication is managed by Docker Compose.
-
-The judging engine is simulated for demonstration purposes.
-
-🔮 Future Enhancements
-
-Integrate actual code execution using external judge APIs (Judge0, Sphere Engine)
-
-Add user authentication and persistent accounts
-
-Support additional programming languages (Python, JavaScript, Go, Rust)
-
-Implement contest scheduling with start/end times
-
-Add detailed submission history and code review features
-
-Support for custom test cases
-
-Add time and memory limit tracking
-
-Implement partial scoring for partially correct solutions
-
-License
-
-This is a prototype/educational project.
+Check the live leaderboard for your ranking.
