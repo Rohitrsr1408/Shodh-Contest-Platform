@@ -1,294 +1,362 @@
-# Shodh-a-Code Contest Platform
+🏆 Shodh-a-Code Contest Platform 🏆
 
-A full-stack competitive programming contest platform built with Spring Boot and Next.js.
+A full-stack competitive programming contest platform built with Spring Boot and Next.js, now fully containerized with Docker.
 
-## Features
+✨ Features
 
-- **User Registration**: Join contests with username and contest ID
-- **Problem Viewing**: Browse programming problems with descriptions, test cases, and difficulty badges
-- **Multi-Language Support**: Write solutions in Java or C++ with language-specific code templates
-- **Code Submission**: Submit solutions through an in-browser code editor with language selection
-- **Real-time Judging**: Simulated code execution with status updates (Pending → Running → Accepted/Wrong Answer)
-- **Live Leaderboard**: Auto-refreshing leaderboard with medal emojis for top performers
-- **Per-User Submission Tracking**: View your submission history with sequential numbering (#1, #2, #3...)
-- **Enhanced UI**: Modern gradient design with status icons, difficulty badges, and responsive layouts
-- **Multiple Problems**: Pre-seeded contest with 3 programming challenges
+✅ User Registration: Join contests with username and contest ID
 
-## Technology Stack
+✅ Problem Viewing: Browse programming problems with descriptions, test cases, and difficulty badges
 
-### Backend
-- **Spring Boot 3.2.0** - REST API framework
-- **Java 17** - Programming language
-- **H2 Database** - In-memory database for development
-- **Spring Data JPA** - Database ORM
-- **Maven** - Dependency management
+✅ Multi-Language Support: Write solutions in Java or C++ with language-specific code templates
 
-### Frontend
-- **Next.js 14** - React framework
-- **React 18** - UI library
-- **Tailwind CSS** - Styling framework
-- **JavaScript** - Programming language
+✅ Code Submission: Submit solutions through an in-browser code editor with language selection
 
-## Project Structure
+✅ Real-time Judging: Simulated code execution with status updates (Pending → Running → Accepted/Wrong Answer)
 
-```
-shodh-a-code/
+✅ Live Leaderboard: Auto-refreshing leaderboard with medal emojis for top performers
+
+✅ Per-User Submission Tracking: View your submission history with sequential numbering (#1, #2, #3...)
+
+✅ Enhanced UI: Modern gradient design with status icons, difficulty badges, and responsive layouts
+
+✅ Multiple Problems: Pre-seeded contest with 3 programming challenges
+
+⚙️ Technology Stack
+
+Backend
+
+Spring Boot 3.2.0 - REST API framework
+
+Java 17 - Programming language
+
+H2 Database - In-memory database
+
+Spring Data JPA - Database ORM
+
+Maven - Dependency management
+
+Docker - Containerization
+
+Frontend
+
+Next.js 14 - React framework
+
+React 18 - UI library
+
+Tailwind CSS - Styling framework
+
+JavaScript - Programming language
+
+Docker - Containerization
+
+📂 Project Structure
+
+ShodhCodePlatform/
 ├── backend/
-│   ├── src/
-│   │   ├── main/
-│   │   │   ├── java/com/shodhacode/
-│   │   │   │   ├── entity/          # JPA entities
-│   │   │   │   ├── repository/      # Data repositories
-│   │   │   │   ├── service/         # Business logic
-│   │   │   │   ├── controller/      # REST controllers
-│   │   │   │   └── dto/             # Data transfer objects
-│   │   │   └── resources/
-│   │   │       ├── application.properties
-│   │   │       └── data.sql         # Seed data
-│   └── pom.xml
+│ ├── src/
+│ │ ├── main/
+│ │ │ ├── java/com/shodhacode/
+│ │ │ │ ├── entity/ # JPA entities
+│ │ │ │ ├── repository/ # Data repositories
+│ │ │ │ ├── service/ # Business logic
+│ │ │ │ ├── controller/ # REST controllers
+│ │ │ │ └── dto/ # Data transfer objects
+│ │ │ └── resources/
+│ │ │ ├── application.properties
+│ │ │ └── data.sql # Seed data
+│ ├── pom.xml
+│ └── Dockerfile # Backend Dockerfile
 ├── frontend/
-│   ├── pages/
-│   │   ├── index.js                 # Join contest page
-│   │   ├── contest/[id].js          # Contest page
-│   │   └── _app.js
-│   ├── styles/
-│   │   └── globals.css
-│   ├── package.json
-│   └── next.config.js
-├── start.sh
+│ ├── pages/
+│ │ ├── index.js # Join contest page
+│ │ ├── contest/[id].js # Contest page
+│ │ └── \_app.js
+│ ├── styles/
+│ │ └── globals.css
+│ ├── package.json
+│ ├── next.config.js
+│ └── Dockerfile # Frontend Dockerfile
+├── docker-compose.yml # Docker Compose file
 └── README.md
-```
 
-## Setup Instructions
+🚀 Running with Docker
 
-### Prerequisites
-- Java 17 or higher
-- Node.js 20 or higher
-- Maven
+This application is designed to be run using Docker Compose, which builds and networks the frontend and backend services automatically.
 
-### Running on Replit
-The application is configured to run automatically on Replit. Simply click the "Run" button to start both backend and frontend servers.
+Prerequisites
 
-### Manual Setup
+Docker Engine
 
-1. **Build Backend**
-   ```bash
-   cd backend
-   mvn clean package -DskipTests
-   ```
+Docker Compose
 
-2. **Install Frontend Dependencies**
-   ```bash
-   cd frontend
-   npm install
-   ```
+1. Clone the Repository
 
-3. **Run Application**
-   ```bash
-   bash start.sh
-   ```
+git clone <your-repository-url>
+cd ShodhCodePlatform
 
-The application will be available at:
-- **Frontend**: http://localhost:5000
-- **Backend API**: http://localhost:8080
+2. Build and Run Containers
 
-## API Documentation
+Run the following command from the root ShodhCodePlatform directory (the one containing docker-compose.yml):
 
-### Base URL
-`http://localhost:8080/api`
+docker-compose up --build
 
-### Endpoints
+This command will:
 
-#### Get Contest
-```http
+Build the Docker image for the backend service.
+
+Build the Docker image for the frontend service.
+
+Start both containers and connect them to the same network.
+
+3. Access the Application
+
+Once the containers are running, you can access the platform:
+
+Frontend: http://localhost:5000
+
+Backend API: http://localhost:8080
+
+Note on H2 Database:
+The H2 Database console is available at http://localhost:8080/h2-console
+
+JDBC URL: jdbc:h2:mem:testdb
+
+User: sa
+
+Password: (leave blank)
+
+📚 API Documentation
+
+Base URL
+
+http://localhost:8080/api
+
+Endpoints
+
+Get Contest
+
 GET /contests/{contestId}
-```
 
-**Response:**
-```json
+Response:
+
 {
-  "id": 1,
-  "name": "Sample Programming Contest",
-  "description": "A beginner-friendly programming contest",
-  "problems": [
-    {
-      "id": 1,
-      "title": "Add Two Numbers",
-      "description": "Write a program...",
-      "sampleInput": "2 3",
-      "expectedOutput": "5",
-      "points": 100
-    }
-  ]
+"id": 1,
+"name": "Sample Programming Contest",
+"description": "A beginner-friendly programming contest",
+"problems": [
+{
+"id": 1,
+"title": "Add Two Numbers",
+"description": "Write a program...",
+"sampleInput": "2 3",
+"expectedOutput": "5",
+"points": 100
 }
-```
+]
+}
 
-#### Join Contest
-```http
+Join Contest
+
 POST /contests/join
 Content-Type: application/json
 
-{
-  "username": "john_doe",
-  "contestId": 1
-}
-```
+Body:
 
-**Response:**
-```json
 {
-  "id": 1,
-  "username": "john_doe",
-  "contestId": 1
+"username": "john_doe",
+"contestId": 1
 }
-```
 
-#### Submit Code
-```http
+Response:
+
+{
+"id": 1,
+"username": "john_doe",
+"contestId": 1
+}
+
+Submit Code
+
 POST /submissions
 Content-Type: application/json
 
-{
-  "userId": 1,
-  "problemId": 1,
-  "language": "JAVA",
-  "code": "import java.util.*;\npublic class Main {\n  public static void main(String[] args) {\n    Scanner sc = new Scanner(System.in);\n    int a = sc.nextInt(), b = sc.nextInt();\n    System.out.println(a+b);\n  }\n}"
-}
-```
+Body:
 
-**Response:**
-```json
 {
-  "id": 1,
-  "userId": 1,
-  "problemId": 1,
-  "language": "JAVA",
-  "code": "...",
-  "status": "PENDING",
-  "submittedAt": "2025-10-26T08:00:00",
-  "score": 0
+"userId": 1,
+"problemId": 1,
+"language": "JAVA",
+"code": "import java.util.\*;\npublic class Main {\n public static void main(String[] args) {\n Scanner sc = new Scanner(System.in);\n int a = sc.nextInt(), b = sc.nextInt();\n System.out.println(a+b);\n }\n}"
 }
-```
 
-#### Get Submission Status
-```http
+Response:
+
+{
+"id": 1,
+"userId": 1,
+"problemId": 1,
+"language": "JAVA",
+"code": "...",
+"status": "PENDING",
+"submittedAt": "2025-10-26T08:00:00",
+"score": 0
+}
+
+Get Submission Status
+
 GET /submissions/{submissionId}
-```
 
-**Response:**
-```json
+Response:
+
 {
-  "id": 1,
-  "userId": 1,
-  "problemId": 1,
-  "status": "ACCEPTED",
-  "result": "All test cases passed!",
-  "score": 100,
-  "submittedAt": "2025-10-26T08:00:00"
+"id": 1,
+"userId": 1,
+"problemId": 1,
+"status": "ACCEPTED",
+"result": "All test cases passed!",
+"score": 100,
+"submittedAt": "2025-10-26T08:00:00"
 }
-```
 
-#### Get Leaderboard
-```http
+Get Leaderboard
+
 GET /contests/{contestId}/leaderboard
-```
 
-**Response:**
-```json
+Response:
+
 [
-  {
-    "username": "john_doe",
-    "totalScore": 250,
-    "solvedProblems": 2
-  }
+{
+"username": "john_doe",
+"totalScore": 250,
+"solvedProblems": 2
+}
 ]
-```
 
-## Architecture
+🔧 Architecture
 
-### Backend Architecture
+Backend Architecture
 
 The backend follows a layered architecture:
 
-1. **Controllers**: Handle HTTP requests and responses
-2. **Services**: Contain business logic
-3. **Repositories**: Data access layer using Spring Data JPA
-4. **Entities**: JPA entity models
+Controllers: Handle HTTP requests and responses
 
-**Key Components:**
+Services: Contain business logic
 
-- **JudgeService**: Simulates code execution for Java and C++ with realistic delays and intelligent code analysis
-- **LeaderboardService**: Calculates rankings based on accepted submissions
-- **ContestService**: Manages contest and user operations
-- **Language Support**: JAVA and CPP enum values for multi-language submissions
+Repositories: Data access layer using Spring Data JPA
 
-### Frontend State Flow
+Entities: JPA entity models
 
-1. User joins contest → Store user ID in localStorage
-2. Fetch contest data → Display problems
-3. User selects problem → Update UI
-4. User submits code → Create submission
-5. Poll submission status every 2 seconds until completion
-6. Poll leaderboard every 15 seconds for updates
+Key Components:
 
-### Simulated Judging
+JudgeService: Simulates code execution for Java and C++ with realistic delays and intelligent code analysis
 
-Since Docker is not available in Replit, the platform uses an intelligent simulated judging engine that:
+LeaderboardService: Calculates rankings based on accepted submissions
 
-- Supports both Java and C++ code analysis
-- Analyzes code for relevant operations (e.g., addition, multiplication, factorial patterns)
-- Matches problem requirements with code patterns using language-specific heuristics
-- Provides realistic status transitions: PENDING → RUNNING → ACCEPTED/WRONG_ANSWER
-- Includes deliberate delays to simulate real code execution
-- Awards points only for accepted solutions
+ContestService: Manages contest and user operations
 
-## Pre-seeded Data
+Language Support: JAVA and CPP enum values for multi-language submissions
+
+Frontend State Flow
+
+User joins contest → Store user ID in localStorage
+
+Fetch contest data → Display problems
+
+User selects problem → Update UI
+
+User submits code → Create submission
+
+Poll submission status every 2 seconds until completion
+
+Poll leaderboard every 15 seconds for updates
+
+🧠 Simulated Judging
+
+The platform uses an intelligent simulated judging engine that:
+
+Supports both Java and C++ code analysis
+
+Analyzes code for relevant operations (e.g., addition, multiplication, factorial patterns)
+
+Matches problem requirements with code patterns using language-specific heuristics
+
+Provides realistic status transitions: PENDING → RUNNING → ACCEPTED/WRONG_ANSWER
+
+Includes deliberate delays to simulate real code execution
+
+Awards points only for accepted solutions
+
+📊 Pre-seeded Data
 
 The application comes with a sample contest containing 3 problems:
 
-1. **Add Two Numbers** (100 points)
-   - Input: Two integers
-   - Output: Their sum
+Add Two Numbers (100 points)
 
-2. **Square a Number** (100 points)
-   - Input: One integer
-   - Output: Its square
+Input: Two integers
 
-3. **Find Factorial** (150 points)
-   - Input: One integer (0-12)
-   - Output: Its factorial
+Output: Their sum
 
-## Usage Guide
+Square a Number (100 points)
 
-1. Open the application in your browser
-2. Enter a username and contest ID (use "1" for the sample contest)
-3. Click "Join Contest"
-4. Select a problem from the tabs to view its description and difficulty
-5. Choose your preferred language (Java or C++) from the dropdown
-6. Write your solution in the code editor (templates provided for each language)
-7. Click "Submit Solution"
-8. Watch your submission status update in real-time with visual status icons
-9. View your per-user submission history with sequential numbering
-10. Check the live leaderboard to see your ranking with medal emojis for top 3
+Input: One integer
 
-## Development Notes
+Output: Its square
 
-- The H2 database is in-memory, so data resets on server restart
-- Frontend uses Next.js rewrites to proxy API calls to the backend
-- Both servers must run concurrently for the application to work
-- The judging engine is simulated for demonstration purposes
+Find Factorial (150 points)
 
-## Future Enhancements
+Input: One integer (0-12)
 
-- Integrate actual code execution using external judge APIs (Judge0, Sphere Engine)
-- Add user authentication and persistent accounts
-- Support additional programming languages (Python, JavaScript, Go, Rust)
-- Implement contest scheduling with start/end times
-- Add detailed submission history and code review features
-- Support for custom test cases
-- Add time and memory limit tracking
-- Implement partial scoring for partially correct solutions
+Output: Its factorial
 
-## License
+💡 Usage Guide
+
+Open http://localhost:5000 in your browser
+
+Enter a username and contest ID (use "1" for the sample contest)
+
+Click "Join Contest"
+
+Select a problem from the tabs to view its description and difficulty
+
+Choose your preferred language (Java or C++) from the dropdown
+
+Write your solution in the code editor (templates provided for each language)
+
+Click "Submit Solution"
+
+Watch your submission status update in real-time with visual status icons
+
+View your per-user submission history with sequential numbering
+
+Check the live leaderboard to see your ranking with medal emojis for top 3
+
+📝 Development Notes
+
+The H2 database is in-memory, so data resets every time the shodh-backend container restarts.
+
+The frontend (frontend) proxies API calls to the backend (backend) using Next.js rewrites. This inter-container communication is managed by Docker Compose.
+
+The judging engine is simulated for demonstration purposes.
+
+🔮 Future Enhancements
+
+Integrate actual code execution using external judge APIs (Judge0, Sphere Engine)
+
+Add user authentication and persistent accounts
+
+Support additional programming languages (Python, JavaScript, Go, Rust)
+
+Implement contest scheduling with start/end times
+
+Add detailed submission history and code review features
+
+Support for custom test cases
+
+Add time and memory limit tracking
+
+Implement partial scoring for partially correct solutions
+
+License
 
 This is a prototype/educational project.

@@ -3,9 +3,13 @@ module.exports = {
   async rewrites() {
     return [
       {
-        source: '/api/:path*',
-        destination: 'http://localhost:8080/api/:path*',
+        source: "/api/:path*",
+        //
+        // --- THIS IS THE FIX ---
+        // Added a "/" between "api" and ":path*"
+        //
+        destination: "http://backend:8080/api/:path*",
       },
-    ]
+    ];
   },
-}
+};

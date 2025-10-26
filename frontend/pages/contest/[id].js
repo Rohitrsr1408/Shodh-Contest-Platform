@@ -87,7 +87,9 @@ int main() {
 
   const fetchContest = async () => {
     try {
-      const response = await fetch(`/api/contests/${id}`)
+      const response = await fetch(
+        `/api/contests/${id}`
+      );
       const data = await response.json()
       setContest(data)
       if (data.problems.length > 0) {
@@ -100,7 +102,9 @@ int main() {
 
   const fetchLeaderboard = async () => {
     try {
-      const response = await fetch(`/api/contests/${id}/leaderboard`)
+      const response = await fetch(
+        `/api/contests/${id}/leaderboard`
+      );
       const data = await response.json()
       setLeaderboard(data)
     } catch (err) {
@@ -110,7 +114,9 @@ int main() {
 
   const fetchSubmissionStatus = async (submissionId) => {
     try {
-      const response = await fetch(`/api/submissions/${submissionId}`)
+      const response = await fetch(
+        `/api/submissions/${submissionId}`
+      );
       const data = await response.json()
       
       setSubmissions(prev => 
@@ -132,16 +138,19 @@ int main() {
     }
 
     try {
-      const response = await fetch('/api/submissions', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          userId,
-          problemId: selectedProblem.id,
-          code,
-          language
-        })
-      })
+      const response = await fetch(
+        `/api/submissions`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userId,
+            problemId: selectedProblem.id,
+            code,
+            language,
+          }),
+        }
+      );
 
       const submission = await response.json()
       setSubmissions(prev => [submission, ...prev])

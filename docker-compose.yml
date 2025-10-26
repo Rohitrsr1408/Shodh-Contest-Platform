@@ -1,0 +1,18 @@
+
+
+services:
+  backend:
+    build: ./backend
+    container_name: shodh-backend
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build: ./frontend
+    container_name: shodh-frontend
+    ports:
+      - "5000:5000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://backend:8080
+    depends_on:
+      - backend

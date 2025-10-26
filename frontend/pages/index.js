@@ -14,11 +14,14 @@ export default function Join() {
     setError('')
 
     try {
-      const response = await fetch('/api/contests/join', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, contestId: parseInt(contestId) })
-      })
+      const response = await fetch(
+        `/api/contests/join`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, contestId: parseInt(contestId) }),
+        }
+      );
 
       if (!response.ok) throw new Error('Failed to join contest')
 
